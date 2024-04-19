@@ -12,7 +12,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":designsystem"))
+
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.tooling.preview)
 }

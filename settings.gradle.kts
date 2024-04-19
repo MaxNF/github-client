@@ -22,4 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Github client"
 include(":app")
- 
+include(":designsystem")
