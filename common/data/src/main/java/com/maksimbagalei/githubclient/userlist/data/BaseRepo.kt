@@ -5,13 +5,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import java.io.IOException
 
 sealed class CallResult<out T> {
     data class Success<out T>(val value: T) : CallResult<T>()
-    data class HttpError(val code: Int? = null, val message: String?) : CallResult<Nothing>()
-    object IOError : CallResult<Nothing>()
-    object UnknownError : CallResult<Nothing>()
+    data class HttpError(val code: Int? = null, val throwable: Throwable) : CallResult<Nothing>()
+    data class OtherError(val throwable: Throwable) : CallResult<Nothing>()
 }
 
 open class BaseRepo {
@@ -26,9 +24,8 @@ open class BaseRepo {
             } catch (throwable: Throwable) {
                 Log.e(TAG, "Error while loading data", throwable)
                 when (throwable) {
-                    is IOException -> CallResult.IOError
-                    is HttpException -> CallResult.HttpError(throwable.code(), throwable.message())
-                    else -> CallResult.UnknownError
+                    is HttpException -> CallResult.HttpError(throwable.code(), throwable)
+                    else -> CallResult.OtherError(throwable)
                 }
             }
         }

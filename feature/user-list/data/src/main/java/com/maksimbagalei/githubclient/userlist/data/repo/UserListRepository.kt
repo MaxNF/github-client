@@ -5,5 +5,5 @@ import com.maksimbagalei.githubclient.userlist.data.dto.UserBrief
 
 interface UserListRepository {
 
-    suspend fun searchUsers(name: String, page: Int): CallResult<List<UserBrief>>
+    suspend fun searchUsers(name: String, page: Int, perPage: Int): CallResult<List<UserBrief>>
 }

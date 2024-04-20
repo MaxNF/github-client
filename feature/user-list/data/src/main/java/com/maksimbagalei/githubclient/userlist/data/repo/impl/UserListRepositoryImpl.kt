@@ -7,15 +7,14 @@ import com.maksimbagalei.githubclient.userlist.data.network.UserListGithubApi
 import com.maksimbagalei.githubclient.userlist.data.repo.UserListRepository
 import javax.inject.Inject
 
-private const val MAXIMUM_PER_PAGE = 100
 class UserListRepositoryImpl @Inject constructor(private val api: UserListGithubApi) : BaseRepo(),
     UserListRepository {
-    override suspend fun searchUsers(name: String, page: Int): CallResult<List<UserBrief>> = safeApiCall {
+    override suspend fun searchUsers(name: String, page: Int, perPage: Int): CallResult<List<UserBrief>> = safeApiCall {
         api.searchUsers(
             query = "$name+in:name",
             type = "users",
             page = page,
-            perPage = MAXIMUM_PER_PAGE
+            perPage = perPage
         )
     }
 }
