@@ -6,5 +6,7 @@ plugins {
 dependencies {
     implementation(project(":common:data"))
 
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.serialization.converter)
     testImplementation(project(":common:test"))
 }

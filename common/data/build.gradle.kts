@@ -7,5 +7,4 @@ dependencies {
     testImplementation(project(":common:test"))
 
     implementation(libs.retrofit)
-    implementation(libs.retrofit2.serialization.converter)
 }
