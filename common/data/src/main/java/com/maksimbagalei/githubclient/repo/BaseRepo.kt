@@ -1,4 +1,4 @@
-package com.maksimbagalei.githubclient.userlist.data
+package com.maksimbagalei.githubclient.repo
 
 import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
