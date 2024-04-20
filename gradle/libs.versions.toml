@@ -16,9 +16,11 @@ androidx-junit = "1.1.5"
 okhttp = "4.11.0"
 retrofit = "2.9.0"
 retrofit2-serialization-converter = "1.0.0"
+paging-compose = "3.2.1"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging-compose"}
 
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }

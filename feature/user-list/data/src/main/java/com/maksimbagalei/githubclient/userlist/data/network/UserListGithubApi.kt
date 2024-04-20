@@ -16,6 +16,6 @@ interface UserListGithubApi {
         @Query("q") query: String,
         @Query("type") type: String,
         @Query("page") page: Int,
-        @Query("per_page") count: Int
+        @Query("per_page") perPage: Int
     ): List<UserBrief>
 }
