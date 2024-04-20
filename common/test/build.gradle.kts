@@ -3,8 +3,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common"))
-
     api(libs.junit)
     api(libs.mockk)
     api(libs.kotlinx.coroutines.test)
