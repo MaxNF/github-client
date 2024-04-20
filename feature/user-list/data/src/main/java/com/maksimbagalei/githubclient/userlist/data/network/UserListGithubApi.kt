@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface UserListGithubApi {
+internal interface UserListGithubApi {
     companion object {
         fun create(retrofit: Retrofit): UserListGithubApi =
             retrofit.create(UserListGithubApi::class.java)

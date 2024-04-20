@@ -1,6 +1,6 @@
 package com.maksimbagalei.githubclient.userlist.data.repo
 
-import com.maksimbagalei.githubclient.userlist.data.CallResult
+import com.maksimbagalei.githubclient.repo.CallResult
 import com.maksimbagalei.githubclient.userlist.data.dto.UserBrief
 
 interface UserListRepository {

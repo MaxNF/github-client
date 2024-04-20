@@ -2,7 +2,7 @@ package com.maksimbagalei.githubclient.userlist.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.maksimbagalei.githubclient.userlist.data.CallResult
+import com.maksimbagalei.githubclient.repo.CallResult
 import com.maksimbagalei.githubclient.userlist.data.dto.UserBrief
 import com.maksimbagalei.githubclient.userlist.data.repo.UserListRepository
 
