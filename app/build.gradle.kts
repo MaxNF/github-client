@@ -13,8 +13,11 @@ android {
 
 dependencies {
     implementation(project(":designsystem"))
+    implementation(project(":feature:user-list:ui"))
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.tooling.preview)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.hilt.navigation.compose)
 }

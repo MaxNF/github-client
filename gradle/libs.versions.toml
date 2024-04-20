@@ -3,34 +3,43 @@ androidGradlePlugin = "8.2.0"
 ksp = "1.9.21-1.0.15"
 hilt-android = "2.49"
 kotlin = "1.9.21"
-activityCompose = "1.7.0"
+activityCompose = "1.9.0"
 kotlin-serialization = "1.6.2"
-hilt-compiler = "1.1.0"
+hilt-compiler = "1.2.0"
 kotlin-compiler = "1.5.6"
-androidx-compose-bom = "2023.10.01"
+androidx-compose-bom = "2024.04.01"
 junit = "4.13.2"
 mockk = "1.13.3"
-kotlinx-coroutines-test = "1.6.4"
+kotlinx-coroutines-test = "1.7.1"
 core-testing = "2.2.0"
 androidx-junit = "1.1.5"
 okhttp = "4.11.0"
 retrofit = "2.9.0"
 retrofit2-serialization-converter = "1.0.0"
 paging-compose = "3.2.1"
+shimmer-compose = "1.3.0"
+coil = "2.4.0"
+lifecycle = "2.7.0"
+navigation-compose = "2.7.7"
+hilt-navigation-compose = "1.2.0"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging-compose"}
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging-compose" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
 
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt-android" }
 androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt-compiler" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt-android" }
+hilt-navigation-compose = {group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose"}
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
@@ -41,6 +50,10 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "a
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit2-serialization-converter = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2-serialization-converter" }
+
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+shimmer-compose = { group = "com.valentinilk.shimmer", name = "compose-shimmer", version.ref = "shimmer-compose" }
 
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
