@@ -1,7 +1,7 @@
-package com.maksimbagalei.githubclient.di
+package com.maksimbagalei.githubclient.data.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.maksimbagalei.githubclient.network.HeaderInterceptor
+import com.maksimbagalei.githubclient.data.network.HeaderInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

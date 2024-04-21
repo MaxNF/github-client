@@ -1,4 +1,4 @@
-package com.maksimbagalei.githubclient.network
+package com.maksimbagalei.githubclient.data.network
 
 import okhttp3.Interceptor
 import okhttp3.Response

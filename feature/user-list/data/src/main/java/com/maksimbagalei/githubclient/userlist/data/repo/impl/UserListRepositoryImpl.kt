@@ -1,8 +1,7 @@
 package com.maksimbagalei.githubclient.userlist.data.repo.impl
 
-import com.maksimbagalei.githubclient.repo.BaseRepo
-import com.maksimbagalei.githubclient.repo.CallResult
-import com.maksimbagalei.githubclient.userlist.data.dto.UserBrief
+import com.maksimbagalei.githubclient.data.repo.BaseRepo
+import com.maksimbagalei.githubclient.data.repo.CallResult
 import com.maksimbagalei.githubclient.userlist.data.dto.UserList
 import com.maksimbagalei.githubclient.userlist.data.network.UserListGithubApi
 import com.maksimbagalei.githubclient.userlist.data.repo.UserListRepository
