@@ -3,6 +3,7 @@ package com.maksimbagalei.githubclient.userdetails.data.network
 import com.maksimbagalei.githubclient.userdetails.data.dto.UserDetails
 import retrofit2.Retrofit
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 internal interface UserDetailsGithubApi {
     companion object {
@@ -10,8 +11,6 @@ internal interface UserDetailsGithubApi {
             retrofit.create(UserDetailsGithubApi::class.java)
     }
 
-    @GET("/search/users")
-    suspend fun fetchUserDetails(
-
-    ): UserDetails
+    @GET("/users/{login}")
+    suspend fun getUserDetails(@Path("login") login: String): UserDetails
 }
