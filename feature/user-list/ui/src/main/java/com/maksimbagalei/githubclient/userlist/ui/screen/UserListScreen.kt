@@ -32,7 +32,6 @@ fun UserListScreen(
     val items = list.collectAsLazyPagingItems()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Column(modifier = modifier) {
-        Spacer(modifier = Modifier.height(16.dp))
         TopBar(scrollBehavior = scrollBehavior, onUserSearch = onUserSearch)
         Box(
             modifier = Modifier
