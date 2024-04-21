@@ -5,6 +5,7 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":common:ui"))
     implementation(project(":feature:user-list:domain"))
     implementation(project(":feature:user-list:data"))
     implementation(project(":designsystem"))
