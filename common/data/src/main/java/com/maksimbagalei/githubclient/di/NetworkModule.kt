@@ -1,7 +1,7 @@
 package com.maksimbagalei.githubclient.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.maksimbagalei.githubclient.network.AuthorizationInterceptor
+import com.maksimbagalei.githubclient.network.HeaderInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +22,7 @@ internal class NetworkModule {
     @Provides
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor(AuthorizationInterceptor())
+            .addInterceptor(HeaderInterceptor())
             .build()
 
     @Suppress("JSON_FORMAT_REDUNDANT")

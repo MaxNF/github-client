@@ -1,6 +1,6 @@
 package com.maksimbagalei.githubclient.userlist.data.network
 
-import com.maksimbagalei.githubclient.userlist.data.dto.UserBrief
+import com.maksimbagalei.githubclient.userlist.data.dto.UserList
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -17,5 +17,5 @@ internal interface UserListGithubApi {
         @Query("type") type: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ): List<UserBrief>
+    ): UserList
 }

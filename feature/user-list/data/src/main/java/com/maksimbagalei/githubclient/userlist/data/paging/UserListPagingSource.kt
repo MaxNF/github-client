@@ -35,7 +35,7 @@ class UserListPagingSource(
 
         val result = when (callResult) {
             is CallResult.Success -> {
-                val data = callResult.value
+                val data = callResult.value.items
                 LoadResult.Page(data, null, calculateNextKey(data, page))
             }
 
