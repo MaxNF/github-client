@@ -13,15 +13,14 @@ private const val PAGE_SIZE = 100
 
 class SearchUsersUseCase @Inject constructor(private val repository: UserListRepository) {
 
-    operator fun invoke(name: String): Flow<PagingData<UserBrief>> =
-        Pager(
-            PagingConfig(
-                pageSize = PAGE_SIZE,
-                prefetchDistance = PAGE_SIZE / 2,
-                initialLoadSize = PAGE_SIZE,
-                enablePlaceholders = true
-            )
-        ) {
-            UserListPagingSource(repository = repository, searchName = name)
-        }.flow
+    operator fun invoke(name: String): Flow<PagingData<UserBrief>> = Pager(
+        PagingConfig(
+            pageSize = PAGE_SIZE,
+            prefetchDistance = PAGE_SIZE / 2,
+            initialLoadSize = PAGE_SIZE,
+            enablePlaceholders = true
+        )
+    ) {
+        UserListPagingSource(repository = repository, searchName = name)
+    }.flow
 }
