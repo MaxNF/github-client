@@ -1,6 +1,6 @@
 package com.maksimbagalei.githubclient.userdetails.ui.model
 
-data class RepositoryModel(
+internal data class RepositoryModel(
     val name: String,
     val language: String,
     val stargazers: String,

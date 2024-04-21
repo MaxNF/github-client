@@ -1,6 +1,6 @@
 package com.maksimbagalei.githubclient.userdetails.ui.model
 
-data class UserDetailsModel(
+internal data class UserDetailsModel(
     val login: String,
     val avatarUrl: String,
     val name: String?,
