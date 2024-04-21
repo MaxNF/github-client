@@ -7,6 +7,8 @@ dependencies {
     implementation(project(":feature:user-details:domain"))
     implementation(project(":feature:user-details:data"))
     implementation(project(":common:ui"))
+    implementation(project(":common:data"))
+    implementation(project(":common:util"))
 
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.paging.compose)
