@@ -4,6 +4,7 @@ package com.maksimbagalei.githubclient.userlist.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import androidx.paging.map
 import com.maksimbagalei.githubclient.common.util.createNotLoadingPagingData
 import com.maksimbagalei.githubclient.userlist.domain.SearchUsersUseCase
@@ -35,7 +36,7 @@ internal class UserListViewModel @Inject constructor(
                     pagingData.map(userBriefModelMapper::map)
                 }
         } else flowOf(createNotLoadingPagingData())
-    }
+    }.cachedIn(viewModelScope)
 
     fun searchUsers(name: String) {
         viewModelScope.launch {
