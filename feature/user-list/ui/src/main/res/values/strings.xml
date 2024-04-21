@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="user_list_title">User list</string>
+    <string name="user_brief_loading_error">Loading error</string>
+    <string name="try_again_button_label">Try again</string>
+    <string name="empty_list_placeholder">No user found, try another search</string>
+    <string name="empty_search_placeholder">Enter user name or login</string>
+</resources>
