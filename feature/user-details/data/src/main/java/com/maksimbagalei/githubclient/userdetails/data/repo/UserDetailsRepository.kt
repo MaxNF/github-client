@@ -8,5 +8,5 @@ interface UserDetailsRepository {
 
     suspend fun getUserDetails(login: String): CallResult<UserDetails>
 
-    suspend fun getUserRepos(login: String): CallResult<List<Repository>>
+    suspend fun getUserRepos(login: String, page: Int, perPage: Int): CallResult<List<Repository>>
 }

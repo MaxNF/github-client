@@ -15,7 +15,7 @@ internal class UserDetailsRepositoryImpl @Inject constructor(private val api: Us
         api.getUserDetails(login)
     }
 
-    override suspend fun getUserRepos(login: String): CallResult<List<Repository>> = safeApiCall {
-        api.getUserRepos(login)
+    override suspend fun getUserRepos(login: String, page: Int, perPage: Int): CallResult<List<Repository>> = safeApiCall {
+        api.getUserRepos(login, page, perPage)
     }
 }
