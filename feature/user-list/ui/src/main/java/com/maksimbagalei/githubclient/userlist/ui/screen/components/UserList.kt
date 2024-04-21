@@ -38,12 +38,12 @@ import coil.compose.AsyncImage
 import com.maksimbagalei.githubclient.R
 import com.maksimbagalei.githubclient.designsystem.AppTheme
 import com.maksimbagalei.githubclient.designsystem.ThemePreviews
-import com.maksimbagalei.githubclient.userlist.data.dto.UserBrief
+import com.maksimbagalei.githubclient.userlist.ui.model.UserBriefModel
 import com.valentinilk.shimmer.shimmer
 
 @Composable
 fun BoxScope.UserList(
-    userBriefs: LazyPagingItems<UserBrief>,
+    userBriefs: LazyPagingItems<UserBriefModel>,
     scrollBehavior: TopAppBarScrollBehavior,
     onUserDetailsClick: (String) -> Unit
 ) {
@@ -65,10 +65,10 @@ fun BoxScope.UserList(
 }
 
 private fun LazyListScope.showLoadedItems(
-    userBriefs: LazyPagingItems<UserBrief>,
+    userBriefs: LazyPagingItems<UserBriefModel>,
     onUserDetailsClick: (String) -> Unit
 ) {
-    items(userBriefs.itemCount) {
+    items(count = userBriefs.itemCount, key = { userBriefs[it]?.id ?: it }) {
         val userBrief = userBriefs[it]
         userBrief?.let {
             UserListItem(item = userBrief, onUserDetailsClick)
@@ -76,7 +76,7 @@ private fun LazyListScope.showLoadedItems(
     }
 }
 
-private fun LazyListScope.handleAppendLoadingState(userBriefs: LazyPagingItems<UserBrief>) {
+private fun LazyListScope.handleAppendLoadingState(userBriefs: LazyPagingItems<UserBriefModel>) {
     when (userBriefs.loadState.append) {
         is LoadState.Loading -> {
             item {
@@ -126,7 +126,7 @@ private fun LazyListScope.singleItemLoadingError(onAppendReloadClick: () -> Unit
 }
 
 @Composable
-private fun BoxScope.HandleListEmptyState(userBriefs: LazyPagingItems<UserBrief>) {
+private fun BoxScope.HandleListEmptyState(userBriefs: LazyPagingItems<UserBriefModel>) {
     when (userBriefs.loadState.refresh) {
         is LoadState.Loading -> {
             InitialLoadShimmer()
@@ -200,7 +200,7 @@ fun LoadingUserListItem() {
 }
 
 @Composable
-fun UserListItem(item: UserBrief, onClick: (String) -> Unit) {
+fun UserListItem(item: UserBriefModel, onClick: (String) -> Unit) {
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.surfaceVariant,
@@ -236,7 +236,7 @@ fun UserListItem(item: UserBrief, onClick: (String) -> Unit) {
 @Composable
 fun PreviewUserListItem() {
     AppTheme {
-        UserListItem(item = UserBrief(1, "MaxNF", "")) {}
+        UserListItem(item = UserBriefModel(1, "MaxNF", "")) {}
     }
 }
 

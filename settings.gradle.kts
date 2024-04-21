@@ -26,6 +26,7 @@ include(":designsystem")
 include(":common:data")
 include(":common:util")
 include(":common:test")
+include(":common:ui")
 
 include(":feature:user-list:data")
 include(":feature:user-list:domain")
