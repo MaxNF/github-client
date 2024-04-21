@@ -14,6 +14,7 @@ android {
 dependencies {
     implementation(project(":designsystem"))
     implementation(project(":feature:user-list:ui"))
+    implementation(project(":feature:user-details:ui"))
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)

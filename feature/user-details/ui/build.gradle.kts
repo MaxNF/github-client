@@ -1,6 +1,7 @@
 plugins {
     id("com.maksimbagalei.library")
     id("com.maksimbagalei.hilt")
+    id("com.maksimbagalei.compose.library")
 }
 
 dependencies {
