@@ -8,10 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.maksimbagalei.githubclient.designsystem.AppTheme
 import com.maksimbagalei.githubclient.navigation.Destination
+import com.maksimbagalei.githubclient.navigation.userDetailsScreen
 import com.maksimbagalei.githubclient.navigation.userListScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +22,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 val navController = rememberNavController()
-                val currentEntry = navController.currentBackStackEntryAsState()
                 Scaffold(
                 ) {
                     NavHost(
@@ -39,6 +38,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                         )
+                        userDetailsScreen(navController::popBackStack)
                     }
                 }
             }
