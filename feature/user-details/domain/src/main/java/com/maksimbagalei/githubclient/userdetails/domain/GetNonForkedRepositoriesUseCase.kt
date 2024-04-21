@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 private const val PAGE_SIZE = 100
 
-class GetNotForkedRepositoriesUseCase @Inject constructor(private val repository: UserDetailsRepository) {
+class GetNonForkedRepositoriesUseCase @Inject constructor(private val repository: UserDetailsRepository) {
 
     operator fun invoke(login: String): Flow<PagingData<Repository>> =
         Pager(

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.map
 import com.maksimbagalei.githubclient.common.util.createNotLoadingPagingData
 import com.maksimbagalei.githubclient.data.repo.CallResult
-import com.maksimbagalei.githubclient.userdetails.domain.GetNotForkedRepositoriesUseCase
+import com.maksimbagalei.githubclient.userdetails.domain.GetNonForkedRepositoriesUseCase
 import com.maksimbagalei.githubclient.userdetails.domain.GetUserDetailsUseCase
 import com.maksimbagalei.githubclient.userdetails.ui.mapper.RepositoryToRepositoryModelMapper
 import com.maksimbagalei.githubclient.userdetails.ui.mapper.UserDetailsToUserDetailsModelMapper
@@ -24,7 +24,7 @@ private const val LOGIN_KEY = "login"
 @HiltViewModel
 internal class UserDetailsViewModel @Inject constructor(
     private val getUserDetailsUseCase: GetUserDetailsUseCase,
-    private val getNotForkedRepositoriesUseCase: GetNotForkedRepositoriesUseCase,
+    private val getNonForkedRepositoriesUseCase: GetNonForkedRepositoriesUseCase,
     private val userDetailsMapper: UserDetailsToUserDetailsModelMapper,
     private val repositoryMapper: RepositoryToRepositoryModelMapper,
     private val savedStateHandle: SavedStateHandle
@@ -35,7 +35,7 @@ internal class UserDetailsViewModel @Inject constructor(
     val screenState = _screenState.asStateFlow()
 
     val repositories = savedStateHandle.get<String>(LOGIN_KEY)?.let { login ->
-        getNotForkedRepositoriesUseCase.invoke(login).map { it.map(repositoryMapper::map) }
+        getNonForkedRepositoriesUseCase.invoke(login).map { it.map(repositoryMapper::map) }
     } ?: flowOf(createNotLoadingPagingData())
 
     init {
