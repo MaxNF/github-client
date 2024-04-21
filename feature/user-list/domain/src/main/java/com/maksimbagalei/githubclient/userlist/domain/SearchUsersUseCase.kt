@@ -17,7 +17,7 @@ class SearchUsersUseCase @Inject constructor(private val repository: UserListRep
         Pager(
             PagingConfig(
                 pageSize = PAGE_SIZE,
-                prefetchDistance = 50,
+                prefetchDistance = PAGE_SIZE / 2,
                 initialLoadSize = PAGE_SIZE,
                 enablePlaceholders = true
             )
