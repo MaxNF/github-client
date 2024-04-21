@@ -3,44 +3,45 @@ package com.maksimbagalei.githubclient
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.maksimbagalei.githubclient.ui.theme.GithubClientTheme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.maksimbagalei.githubclient.designsystem.AppTheme
+import com.maksimbagalei.githubclient.navigation.Destination
+import com.maksimbagalei.githubclient.navigation.userListScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            GithubClientTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+            AppTheme {
+                val navController = rememberNavController()
+                val currentEntry = navController.currentBackStackEntryAsState()
+                Scaffold(
                 ) {
-                    Greeting("Android")
+                    NavHost(
+                        modifier = Modifier
+                            .padding(it)
+                            .consumeWindowInsets(it),
+                        navController = navController,
+                        startDestination = Destination.UserList.route
+                    ) {
+                        userListScreen(
+                            onDetailsClick = { login ->
+                                navController.navigate(
+                                    Destination.UserDetails.createRoute(login)
+                                )
+                            }
+                        )
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    GithubClientTheme {
-        Greeting("Android")
     }
 }
