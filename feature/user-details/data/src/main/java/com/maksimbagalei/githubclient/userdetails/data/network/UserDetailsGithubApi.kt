@@ -1,5 +1,6 @@
 package com.maksimbagalei.githubclient.userdetails.data.network
 
+import com.maksimbagalei.githubclient.userdetails.data.dto.Repository
 import com.maksimbagalei.githubclient.userdetails.data.dto.UserDetails
 import retrofit2.Retrofit
 import retrofit2.http.GET
@@ -13,4 +14,7 @@ internal interface UserDetailsGithubApi {
 
     @GET("/users/{login}")
     suspend fun getUserDetails(@Path("login") login: String): UserDetails
+
+    @GET("/users/{login}/repos")
+    suspend fun getUserRepos(@Path("login") login: String): List<Repository>
 }
