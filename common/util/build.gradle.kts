@@ -3,5 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation(libs.androidx.paging.compose)
+
     testImplementation(project(":common:test"))
 }

@@ -47,7 +47,35 @@ fun BoxScope.UserList(
     scrollBehavior: TopAppBarScrollBehavior,
     onUserDetailsClick: (String) -> Unit
 ) {
-    HandleListEmptyState(userBriefs = userBriefs)
+    when (userBriefs.loadState.source.refresh) {
+        is LoadState.Loading -> {
+            InitialLoadShimmer()
+        }
+
+        is LoadState.Error -> {
+            TryAgainPlaceholder { userBriefs.refresh() }
+        }
+
+        is LoadState.NotLoading -> {
+            if (userBriefs.itemCount == 0) {
+                EmptyListPlaceholder(modifier = Modifier.align(Alignment.Center))
+            } else {
+                LoadedList(
+                    scrollBehavior = scrollBehavior,
+                    userBriefs = userBriefs,
+                    onUserDetailsClick = onUserDetailsClick
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun LoadedList(
+    scrollBehavior: TopAppBarScrollBehavior,
+    userBriefs: LazyPagingItems<UserBriefModel>,
+    onUserDetailsClick: (String) -> Unit
+) {
     LazyColumn(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         contentPadding = PaddingValues(
@@ -77,7 +105,7 @@ private fun LazyListScope.showLoadedItems(
 }
 
 private fun LazyListScope.handleAppendLoadingState(userBriefs: LazyPagingItems<UserBriefModel>) {
-    when (userBriefs.loadState.append) {
+    when (userBriefs.loadState.source.append) {
         is LoadState.Loading -> {
             item {
                 LoadingUserListItem()
@@ -126,25 +154,6 @@ private fun LazyListScope.singleItemLoadingError(onAppendReloadClick: () -> Unit
 }
 
 @Composable
-private fun BoxScope.HandleListEmptyState(userBriefs: LazyPagingItems<UserBriefModel>) {
-    when (userBriefs.loadState.refresh) {
-        is LoadState.Loading -> {
-            InitialLoadShimmer()
-        }
-
-        is LoadState.NotLoading -> {
-            if (userBriefs.itemCount == 0) {
-                EmptyListPlaceholder(modifier = Modifier.align(Alignment.Center))
-            }
-        }
-
-        is LoadState.Error -> {
-            RefreshErrorState { userBriefs.refresh() }
-        }
-    }
-}
-
-@Composable
 fun InitialLoadShimmer() {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -163,7 +172,7 @@ fun EmptyListPlaceholder(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun BoxScope.RefreshErrorState(
+fun BoxScope.TryAgainPlaceholder(
     onReloadClick: () -> Unit,
 ) {
     val errorMsg = stringResource(id = R.string.user_brief_loading_error)

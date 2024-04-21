@@ -4,13 +4,10 @@ package com.maksimbagalei.githubclient.userlist.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.LoadState
-import androidx.paging.LoadStates
-import androidx.paging.PagingData
 import androidx.paging.map
+import com.maksimbagalei.githubclient.common.util.createNotLoadingPagingData
 import com.maksimbagalei.githubclient.userlist.domain.SearchUsersUseCase
 import com.maksimbagalei.githubclient.userlist.ui.mapper.UserBriefToUserBriefModelMapper
-import com.maksimbagalei.githubclient.userlist.ui.model.UserBriefModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -30,24 +27,14 @@ class UserListViewModel @Inject constructor(
 ) : ViewModel() {
     private val search = MutableStateFlow("")
 
-    val users = search.flatMapLatest {searchString ->
+    val users = search.flatMapLatest { searchString ->
         if (searchString.isNotBlank()) {
             delay(DELAY_BEFORE_REQUEST)
-            searchUsersUseCase.invoke(searchString).map { pagingData ->
-                pagingData.map(userBriefModelMapper::map)
-            }
-        } else {
-            flowOf(
-                PagingData.from(
-                    emptyList<UserBriefModel>(),
-                    sourceLoadStates = LoadStates(
-                        LoadState.NotLoading(true),
-                        LoadState.NotLoading(true),
-                        LoadState.NotLoading(true)
-                    )
-                )
-            )
-        }
+            searchUsersUseCase.invoke(searchString)
+                .map { pagingData ->
+                    pagingData.map(userBriefModelMapper::map)
+                }
+        } else flowOf(createNotLoadingPagingData())
     }
 
     fun searchUsers(name: String) {
