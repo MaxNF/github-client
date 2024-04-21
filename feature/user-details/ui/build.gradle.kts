@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":feature:user-details:domain"))
+    implementation(project(":feature:user-details:data"))
     implementation(project(":common:ui"))
 
     testImplementation(project(":common:test"))
