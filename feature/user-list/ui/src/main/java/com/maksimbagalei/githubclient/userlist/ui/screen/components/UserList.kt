@@ -191,7 +191,7 @@ fun BoxScope.RefreshErrorState(
 fun LoadingUserListItem() {
     Surface(
         shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.tertiary,
+        color = MaterialTheme.colorScheme.primary,
         modifier = Modifier
             .shimmer()
             .fillMaxWidth()
@@ -203,7 +203,7 @@ fun LoadingUserListItem() {
 fun UserListItem(item: UserBrief, onClick: (String) -> Unit) {
     Surface(
         shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.tertiary,
+        color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick(item.login) },
