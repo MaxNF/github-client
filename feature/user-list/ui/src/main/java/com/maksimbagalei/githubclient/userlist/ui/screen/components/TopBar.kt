@@ -25,7 +25,7 @@ import com.maksimbagalei.githubclient.R
 private const val MAX_SEARCH_LENGTH = 256
 
 @Composable
-fun TopBar(
+internal fun TopBar(
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior,
     onUserSearch: (String) -> Unit
@@ -40,7 +40,7 @@ fun TopBar(
 }
 
 @Composable
-fun TopBarTitle(onUserSearch: (String) -> Unit) {
+private fun TopBarTitle(onUserSearch: (String) -> Unit) {
     var search by rememberSaveable { mutableStateOf("") }
     TextField(
         modifier = Modifier
@@ -58,14 +58,14 @@ fun TopBarTitle(onUserSearch: (String) -> Unit) {
 }
 
 @Composable
-fun SearchPlaceholder() {
+private fun SearchPlaceholder() {
     val placeholderText = stringResource(id = R.string.empty_search_placeholder)
     Text(placeholderText, style = MaterialTheme.typography.bodyLarge)
 }
 
 @Preview
 @Composable
-fun PreviewTopBar() {
+private fun PreviewTopBar() {
     TopBar(scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()) {
 
     }

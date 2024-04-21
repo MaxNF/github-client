@@ -42,7 +42,7 @@ import com.maksimbagalei.githubclient.userlist.ui.model.UserBriefModel
 import com.valentinilk.shimmer.shimmer
 
 @Composable
-fun BoxScope.UserList(
+internal fun BoxScope.UserList(
     userBriefs: LazyPagingItems<UserBriefModel>,
     scrollBehavior: TopAppBarScrollBehavior,
     onUserDetailsClick: (String) -> Unit
@@ -154,7 +154,7 @@ private fun LazyListScope.singleItemLoadingError(onAppendReloadClick: () -> Unit
 }
 
 @Composable
-fun InitialLoadShimmer() {
+private fun InitialLoadShimmer() {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier.padding(top = 16.dp)
@@ -166,13 +166,13 @@ fun InitialLoadShimmer() {
 }
 
 @Composable
-fun EmptyListPlaceholder(modifier: Modifier = Modifier) {
+private fun EmptyListPlaceholder(modifier: Modifier = Modifier) {
     val text = stringResource(id = R.string.empty_list_placeholder)
     Text(modifier = modifier, text = text, style = MaterialTheme.typography.titleSmall)
 }
 
 @Composable
-fun BoxScope.TryAgainPlaceholder(
+private fun BoxScope.TryAgainPlaceholder(
     onReloadClick: () -> Unit,
 ) {
     val errorMsg = stringResource(id = R.string.user_brief_loading_error)
@@ -197,7 +197,7 @@ fun BoxScope.TryAgainPlaceholder(
 }
 
 @Composable
-fun LoadingUserListItem() {
+private fun LoadingUserListItem() {
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.primary,
@@ -209,7 +209,7 @@ fun LoadingUserListItem() {
 }
 
 @Composable
-fun UserListItem(item: UserBriefModel, onClick: (String) -> Unit) {
+private fun UserListItem(item: UserBriefModel, onClick: (String) -> Unit) {
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.surfaceVariant,
@@ -243,7 +243,7 @@ fun UserListItem(item: UserBriefModel, onClick: (String) -> Unit) {
 
 @ThemePreviews
 @Composable
-fun PreviewUserListItem() {
+private fun PreviewUserListItem() {
     AppTheme {
         UserListItem(item = UserBriefModel(1, "MaxNF", "")) {}
     }
@@ -251,7 +251,7 @@ fun PreviewUserListItem() {
 
 @Preview
 @Composable
-fun PreviewSingleItemLoadingError() {
+private fun PreviewSingleItemLoadingError() {
     LazyColumn(content = {
         singleItemLoadingError { }
     })

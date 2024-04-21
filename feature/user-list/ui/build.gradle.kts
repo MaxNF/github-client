@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.shimmer.compose)
     implementation(libs.coil)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.hilt.navigation.compose)
     testImplementation(project(":common:test"))
     debugImplementation(libs.androidx.ui.tooling)
 }

@@ -21,7 +21,7 @@ import javax.inject.Inject
 private const val DELAY_BEFORE_REQUEST = 1_000L // 1 sec
 
 @HiltViewModel
-class UserListViewModel @Inject constructor(
+internal class UserListViewModel @Inject constructor(
     private val searchUsersUseCase: SearchUsersUseCase,
     private val userBriefModelMapper: UserBriefToUserBriefModelMapper
 ) : ViewModel() {
