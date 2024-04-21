@@ -1,12 +1,16 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.maksimbagalei.githubclient.userlist.ui.screen.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,14 +24,19 @@ import com.maksimbagalei.githubclient.R
 
 private const val MAX_SEARCH_LENGTH = 256
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(modifier: Modifier = Modifier, onUserSearch: (String) -> Unit) {
-    TopAppBar(
-        modifier = modifier,
+fun TopBar(
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior,
+    onUserSearch: (String) -> Unit
+) {
+    CenterAlignedTopAppBar(
+        modifier = modifier.padding(horizontal = 16.dp),
         title = {
             TopBarTitle(onUserSearch)
-        })
+        },
+        scrollBehavior = scrollBehavior
+    )
 }
 
 @Composable
@@ -35,8 +44,7 @@ fun TopBarTitle(onUserSearch: (String) -> Unit) {
     var search by remember { mutableStateOf("") }
     TextField(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .fillMaxWidth(),
         value = search,
         onValueChange = {
             if (it.length <= MAX_SEARCH_LENGTH) {
@@ -58,7 +66,7 @@ fun SearchPlaceholder() {
 @Preview
 @Composable
 fun PreviewTopBar() {
-    TopBar {
+    TopBar(scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()) {
 
     }
 }
