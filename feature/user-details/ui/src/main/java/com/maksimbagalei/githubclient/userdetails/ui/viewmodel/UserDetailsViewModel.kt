@@ -3,6 +3,7 @@ package com.maksimbagalei.githubclient.userdetails.ui.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import androidx.paging.map
 import com.maksimbagalei.githubclient.common.util.createNotLoadingPagingData
 import com.maksimbagalei.githubclient.data.repo.CallResult
@@ -36,7 +37,7 @@ internal class UserDetailsViewModel @Inject constructor(
 
     val repositories = savedStateHandle.get<String>(LOGIN_KEY)?.let { login ->
         getNonForkedRepositoriesUseCase.invoke(login).map { it.map(repositoryMapper::map) }
-    } ?: flowOf(createNotLoadingPagingData())
+    }?.cachedIn(viewModelScope) ?: flowOf(createNotLoadingPagingData())
 
     init {
         fetchDetails()

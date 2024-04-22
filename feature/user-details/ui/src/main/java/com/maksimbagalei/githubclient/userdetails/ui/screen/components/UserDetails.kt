@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -39,7 +40,7 @@ import com.valentinilk.shimmer.shimmer
 
 @Composable
 internal fun UserDetails(
-    state: UserDetailsScreenState,
+    state: State<UserDetailsScreenState>,
     pagingData: LazyPagingItems<RepositoryModel>,
     onDetailsReloadClick: () -> Unit,
     onRepoClick: (String) -> Unit,
@@ -53,7 +54,7 @@ internal fun UserDetails(
     ) {
         item {
             Column {
-                when (state) {
+                when (val screenState = state.value) {
                     UserDetailsScreenState.Loading -> {
                         UserDetailsShimmer()
                     }
@@ -63,7 +64,7 @@ internal fun UserDetails(
                     }
 
                     is UserDetailsScreenState.Loaded -> {
-                        LoadedState(state.model)
+                        LoadedState(screenState.model)
                     }
                 }
                 Text(
@@ -185,16 +186,20 @@ private fun RepositoryItem(item: RepositoryModel, onClick: (String) -> Unit) {
                     textAlign = TextAlign.Start,
                     modifier = Modifier
                 )
-                Text(
-                    text = item.language,
-                    textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Text(
-                    text = item.description,
-                    textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.bodySmall
-                )
+                item.language?.let {
+                    Text(
+                        text = it,
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+                item.description?.let {
+                    Text(
+                        text = item.description,
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
             }
             Row(modifier = Modifier) {
                 Icon(
