@@ -10,13 +10,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.maksimbagalei.githubclient.R
 
 @Composable
-internal fun TopBar(modifier: Modifier = Modifier, onBackClick: () -> Unit) {
+internal fun UserDetailsTopBar(onBackClick: () -> Unit) {
     TopAppBar(
         navigationIcon = { NavigationIcon(onBackClick) },
         title = { TopBarTitle() }
@@ -42,7 +41,7 @@ private fun TopBarTitle() {
 @Preview
 @Composable
 private fun PreviewTopBar() {
-    TopBar {
+    UserDetailsTopBar {
 
     }
 }

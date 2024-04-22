@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -17,8 +18,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.maksimbagalei.githubclient.designsystem.ThemePreviews
 import com.maksimbagalei.githubclient.userlist.ui.model.UserBriefModel
-import com.maksimbagalei.githubclient.userlist.ui.screen.components.TopBar
 import com.maksimbagalei.githubclient.userlist.ui.screen.components.UserList
+import com.maksimbagalei.githubclient.userlist.ui.screen.components.UserListTopBar
 import com.maksimbagalei.githubclient.userlist.ui.viewmodel.UserListViewModel
 
 @Composable
@@ -46,18 +47,24 @@ private fun ScreenContent(
     onDetailsClick: (String) -> Unit,
     onUserSearch: (String) -> Unit,
 ) {
-    Column(modifier = modifier) {
-        TopBar(scrollBehavior = scrollBehavior, onUserSearch = onUserSearch)
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 16.dp, end = 16.dp)
-        ) {
-            UserList(
-                userBriefs = items,
-                scrollBehavior = scrollBehavior,
-                onUserDetailsClick = onDetailsClick
-            )
+    Scaffold(topBar = {
+        UserListTopBar(
+            scrollBehavior = scrollBehavior,
+            onUserSearch = onUserSearch
+        )
+    }) {
+        Column(modifier = modifier.padding(it)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 16.dp, end = 16.dp)
+            ) {
+                UserList(
+                    userBriefs = items,
+                    scrollBehavior = scrollBehavior,
+                    onUserDetailsClick = onDetailsClick
+                )
+            }
         }
     }
 }

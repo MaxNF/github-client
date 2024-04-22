@@ -40,12 +40,14 @@ import com.valentinilk.shimmer.shimmer
 
 @Composable
 internal fun UserDetails(
+    modifier: Modifier = Modifier,
     state: State<UserDetailsScreenState>,
     pagingData: LazyPagingItems<RepositoryModel>,
     onDetailsReloadClick: () -> Unit,
     onRepoClick: (String) -> Unit,
 ) {
     LazyColumn(
+        modifier = modifier,
         contentPadding = PaddingValues(
             top = 16.dp,
             bottom = 32.dp

@@ -1,8 +1,8 @@
 package com.maksimbagalei.githubclient.userdetails.ui.screen
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -20,7 +20,7 @@ import com.maksimbagalei.githubclient.designsystem.AppTheme
 import com.maksimbagalei.githubclient.userdetails.ui.model.RepositoryModel
 import com.maksimbagalei.githubclient.userdetails.ui.model.UserDetailsModel
 import com.maksimbagalei.githubclient.userdetails.ui.screen.components.UserDetails
-import com.maksimbagalei.githubclient.userdetails.ui.screen.components.TopBar
+import com.maksimbagalei.githubclient.userdetails.ui.screen.components.UserDetailsTopBar
 import com.maksimbagalei.githubclient.userdetails.ui.screenstate.UserDetailsScreenState
 import com.maksimbagalei.githubclient.userdetails.ui.viewmodel.UserDetailsViewModel
 import kotlinx.coroutines.flow.flowOf
@@ -50,9 +50,8 @@ private fun ScreenContent(
     pagingData: LazyPagingItems<RepositoryModel>,
     onRepoClick: (String) -> Unit
 ) {
-    Column(modifier = modifier) {
-        TopBar(onBackClick = onBackClick)
-        UserDetails(state, pagingData, onReloadClick, onRepoClick)
+    Scaffold(topBar = { UserDetailsTopBar(onBackClick) }) {
+        UserDetails(modifier.padding(it), state, pagingData, onReloadClick, onRepoClick)
     }
 }
 
