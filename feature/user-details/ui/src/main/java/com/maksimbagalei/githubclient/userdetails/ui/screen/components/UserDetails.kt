@@ -172,10 +172,10 @@ private fun LoadedState(model: UserDetailsModel) {
 private fun RepositoryItem(item: RepositoryModel, onClick: (String) -> Unit) {
     Surface(
         shape = RoundedCornerShape(16.dp),
+        onClick = { onClick(item.url) },
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick(item.url) },
     ) {
         Row(
             modifier = Modifier

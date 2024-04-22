@@ -212,10 +212,10 @@ private fun LoadingUserListItem() {
 private fun UserListItem(item: UserBriefModel, onClick: (String) -> Unit) {
     Surface(
         shape = RoundedCornerShape(16.dp),
+        onClick = { onClick(item.login) },
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick(item.login) },
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 16.dp),
