@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.maksimbagalei.githubclient.userdetails.ui.screen.components
 
 import androidx.compose.foundation.clickable
@@ -17,14 +19,17 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,13 +46,14 @@ import com.valentinilk.shimmer.shimmer
 @Composable
 internal fun UserDetails(
     modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior,
     state: State<UserDetailsScreenState>,
     pagingData: LazyPagingItems<RepositoryModel>,
     onDetailsReloadClick: () -> Unit,
     onRepoClick: (String) -> Unit,
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         contentPadding = PaddingValues(
             top = 16.dp,
             bottom = 32.dp
