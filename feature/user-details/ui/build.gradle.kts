@@ -10,6 +10,7 @@ dependencies {
     implementation(project(":common:ui"))
     implementation(project(":common:data"))
     implementation(project(":common:util"))
+    implementation(project(":designsystem"))
 
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.paging.compose)

@@ -7,6 +7,7 @@ import javax.inject.Inject
 
 internal class RepositoryToRepositoryModelMapper @Inject constructor() : Mapper<Repository, RepositoryModel> {
     override fun map(from: Repository): RepositoryModel = RepositoryModel(
+        id = from.id,
         name = from.name,
         language = from.language,
         stargazers = from.stargazers.toString(),

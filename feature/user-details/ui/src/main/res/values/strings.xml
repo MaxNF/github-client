@@ -5,5 +5,7 @@
     <string name="try_again_button_label">Try again</string>
     <string name="followers_label">Followers:</string>
     <string name="following_label">Following:</string>
-    <string name="repos_label">Non-forked Repositories</string>
+    <string name="repos_label">Non-forked repositories</string>
+    <string name="no_repos_placeholder">No repositories found</string>
+    <string name="repo_loading_error">Loading error</string>
 </resources>

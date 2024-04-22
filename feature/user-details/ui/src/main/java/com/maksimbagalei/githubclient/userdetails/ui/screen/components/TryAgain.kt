@@ -1,12 +1,11 @@
 package com.maksimbagalei.githubclient.userdetails.ui.screen.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,21 +15,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.maksimbagalei.githubclient.R
+import com.maksimbagalei.githubclient.designsystem.AppTheme
 
 @Composable
-internal fun BoxScope.TryAgain(
-    onReloadClick: () -> Unit,
-) {
+internal fun ColumnScope.TryAgain(onReloadClick: () -> Unit) {
     val errorMsg = stringResource(id = R.string.user_brief_loading_error)
     val tryAgainMsg = stringResource(id = R.string.try_again_button_label)
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .align(Alignment.Center),
+            .align(Alignment.CenterHorizontally),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(32.dp))
         Text(text = errorMsg, style = MaterialTheme.typography.titleSmall)
-        Spacer(modifier = Modifier.size(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             modifier = Modifier.clickable {
                 onReloadClick()
@@ -45,7 +44,9 @@ internal fun BoxScope.TryAgain(
 @Preview(widthDp = 400, heightDp = 700, showBackground = true)
 @Composable
 private fun TryAgainPreview() {
-    Box {
-        TryAgain {}
+    AppTheme {
+        Column {
+            TryAgain {}
+        }
     }
 }
