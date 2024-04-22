@@ -1,5 +1,8 @@
 package com.maksimbagalei.githubclient.userdetails.ui.viewmodel
 
+import android.content.Context
+import android.net.Uri
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,6 +22,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 private const val LOGIN_KEY = "login"
 
@@ -57,5 +61,11 @@ internal class UserDetailsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun openRepo(context: Context, url: String) {
+        val intent: CustomTabsIntent = CustomTabsIntent.Builder()
+            .build()
+        intent.launchUrl(context, Uri.parse(url))
     }
 }

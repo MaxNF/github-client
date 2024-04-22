@@ -19,6 +19,7 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.androidx.browser)
     testImplementation(project(":common:test"))
     debugImplementation(libs.androidx.ui.tooling)
 }
