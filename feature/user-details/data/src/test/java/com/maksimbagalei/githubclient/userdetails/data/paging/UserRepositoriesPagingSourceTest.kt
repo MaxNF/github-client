@@ -30,56 +30,49 @@ class UserRepositoriesPagingSourceTest : BaseTest() {
     }
 
     @Test
-    fun `pager is refreshed, content is correctly loaded`() {
+    fun `pager is refreshed, content is correctly loaded`() = runTest {
         val mockResult = List(10) { repositoryMock }
         coEvery { repo.getUserRepos(any(), any(), any()) }.returns(
             CallResult.Success(mockResult)
         )
 
-        runTest {
-            val pager = TestPager(PagingConfig(100), pagingSource)
-            val result = pager.refresh() as PagingSource.LoadResult.Page
-            assertContentEquals(result.data, mockResult)
-        }
+        val pager = TestPager(PagingConfig(100), pagingSource)
+        val result = pager.refresh() as PagingSource.LoadResult.Page
+        assertContentEquals(result.data, mockResult)
     }
 
     @Test
-    fun `pager is refreshed and appended two times, content is correctly loaded`() {
+    fun `pager is refreshed and appended two times, content is correctly loaded`() = runTest {
         val mockResult = List(10) { repositoryMock }
         coEvery { repo.getUserRepos(any(), any(), any()) }.returns(
             CallResult.Success(mockResult)
         )
 
-        runTest {
-            val pager = TestPager(PagingConfig(pageSize = 10, initialLoadSize = 10), pagingSource)
-            with(pager) {
-                refresh()
-                append()
-                append()
-            }
-            val pages = pager.getPages()
-            assertEquals(3, pages.size)
-            assertContentEquals(List(30) { repositoryMock }, pages.flatten())
+        val pager = TestPager(PagingConfig(pageSize = 10, initialLoadSize = 10), pagingSource)
+        with(pager) {
+            refresh()
+            append()
+            append()
         }
+        val pages = pager.getPages()
+        assertEquals(3, pages.size)
+        assertContentEquals(List(30) { repositoryMock }, pages.flatten())
     }
 
     @Test
-    fun `pager refreshed, repo returns error, last page is not loaded`() {
+    fun `pager refreshed, repo returns error, last page is not loaded`() = runTest {
         coEvery { repo.getUserRepos(any(), any(), any()) }.returns(
             CallResult.OtherError(Exception())
         )
 
-        runTest {
-            val pager = TestPager(PagingConfig(pageSize = 10, initialLoadSize = 10), pagingSource)
-            pager.refresh()
-            assertNull(pager.getLastLoadedPage())
-        }
+        val pager = TestPager(PagingConfig(pageSize = 10, initialLoadSize = 10), pagingSource)
+        pager.refresh()
+        assertNull(pager.getLastLoadedPage())
     }
 
     @Test
     fun `pager refreshed and appended multiple times, repo returns data then error then data again, page results are correct`() =
         runTest {
-
             val mockResult = List(10) { repositoryMock.copy(id = 0) }
             coEvery { repo.getUserRepos(any(), any(), any()) }.returns(
                 CallResult.Success(mockResult)
