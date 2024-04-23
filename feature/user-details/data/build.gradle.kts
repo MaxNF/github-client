@@ -10,4 +10,5 @@ dependencies {
     implementation(libs.retrofit2.serialization.converter)
     implementation(libs.androidx.paging.compose)
     testImplementation(project(":common:test"))
+    testImplementation(libs.androidx.paging.testing)
 }
