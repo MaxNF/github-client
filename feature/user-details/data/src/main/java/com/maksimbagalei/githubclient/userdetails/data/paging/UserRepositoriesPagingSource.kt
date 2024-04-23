@@ -36,7 +36,7 @@ class UserRepositoriesPagingSource(
         val result = when (callResult) {
             is CallResult.Success -> {
                 val data = callResult.value
-                LoadResult.Page(data, null, calculateNextKey(data, page))
+                LoadResult.Page(data, null, calculateNextKey(data, page, params))
             }
 
             is CallResult.HttpError -> {
@@ -49,8 +49,8 @@ class UserRepositoriesPagingSource(
         return result
     }
 
-    private fun calculateNextKey(data: List<Repository>, currentPage: Int): Int? {
-        val isMoreAvailable = data.size >= MAX_LOAD_SIZE
+    private fun calculateNextKey(data: List<Repository>, currentPage: Int, params: LoadParams<Int>): Int? {
+        val isMoreAvailable = data.size == params.loadSize
         return if (isMoreAvailable) currentPage + 1 else null
     }
 }
