@@ -104,17 +104,27 @@ internal fun UserDetails(
                         EmptyListPlaceholder()
                     }
                 } else {
-                    items(pagingData.itemCount, key = { pagingData[it]?.id ?: it }) {
-                        pagingData[it]?.let { model ->
-                            RepositoryItem(item = model, onClick = onRepoClick)
-                        }
-                    }
+                    showLoadedItems(
+                        pagingData = pagingData,
+                        onClick = onRepoClick
+                    )
+                    handleAppendLoadingState(pagingData)
                 }
             }
         }
     }
 }
 
+private fun LazyListScope.showLoadedItems(
+    pagingData: LazyPagingItems<RepositoryModel>,
+    onClick: (String) -> Unit
+) {
+    items(pagingData.itemCount, key = { pagingData[it]?.id ?: it }) {
+        pagingData[it]?.let { model ->
+            RepositoryItem(item = model, onClick = onClick)
+        }
+    }
+}
 @Composable
 private fun TryAgainPlaceholder(
     onReloadClick: () -> Unit,
