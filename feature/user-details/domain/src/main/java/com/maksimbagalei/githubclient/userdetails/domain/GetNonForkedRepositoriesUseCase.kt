@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetNonForkedRepositoriesUseCase @Inject constructor(private val factory: UserRepositoriesPagerFactory) {
-
     operator fun invoke(login: String): Flow<PagingData<Repository>> =
         factory.createPager(login).flow.map { pagingData ->
             pagingData.filter {
