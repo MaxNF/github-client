@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.Pager
 import androidx.paging.PagingData
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListUpdateCallback
 import com.maksimbagalei.githubclient.common.test.BaseTest
+import com.maksimbagalei.githubclient.common.test.paging.TestDiffCallback
+import com.maksimbagalei.githubclient.common.test.paging.TestListCallback
 import com.maksimbagalei.githubclient.userdetails.data.dto.Repository
 import com.maksimbagalei.githubclient.userdetails.data.paging.UserRepositoriesPagerFactory
 import com.maksimbagalei.githubclient.userdetails.repositoryMock
@@ -65,22 +65,5 @@ class GetNonForkedRepositoriesUseCaseTest : BaseTest() {
             listOf(repositoryMock.copy(id = 0, isFork = false)),
             result
         )
-    }
-}
-
-private class TestListCallback : ListUpdateCallback {
-    override fun onChanged(position: Int, count: Int, payload: Any?) {}
-    override fun onMoved(fromPosition: Int, toPosition: Int) {}
-    override fun onInserted(position: Int, count: Int) {}
-    override fun onRemoved(position: Int, count: Int) {}
-}
-
-private class TestDiffCallback<T> : DiffUtil.ItemCallback<T>() {
-    override fun areItemsTheSame(oldItem: T & Any, newItem: T & Any): Boolean {
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItem: T & Any, newItem: T & Any): Boolean {
-        return oldItem == newItem
     }
 }

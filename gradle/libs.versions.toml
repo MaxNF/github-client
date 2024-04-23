@@ -28,6 +28,7 @@ browser = "1.8.0"
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging-compose" }
 androidx-paging-testing = { group = "androidx.paging", name = "paging-testing", version.ref = "paging-compose" }
+androidx-paging-runtime-ktx = {group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging-compose" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
