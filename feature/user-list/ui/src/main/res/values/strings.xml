@@ -3,6 +3,7 @@
     <string name="user_list_title">User list</string>
     <string name="user_brief_loading_error">Loading error</string>
     <string name="try_again_button_label">Try again</string>
-    <string name="empty_list_placeholder">No user found, try another search</string>
+    <string name="no_user_found_placeholder">No user found, try another search</string>
+    <string name="try_to_search_something">Try to search something</string>
     <string name="empty_search_placeholder">Enter user name or login</string>
 </resources>

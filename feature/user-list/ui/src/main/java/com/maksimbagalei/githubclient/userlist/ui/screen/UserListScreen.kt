@@ -7,19 +7,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
+import com.maksimbagalei.githubclient.R
 import com.maksimbagalei.githubclient.designsystem.ThemePreviews
-import com.maksimbagalei.githubclient.userlist.ui.model.UserBriefModel
 import com.maksimbagalei.githubclient.userlist.ui.screen.components.UserList
 import com.maksimbagalei.githubclient.userlist.ui.screen.components.UserListTopBar
+import com.maksimbagalei.githubclient.userlist.ui.screen.state.UserListScreenState
 import com.maksimbagalei.githubclient.userlist.ui.viewmodel.UserListViewModel
 
 @Composable
@@ -28,12 +33,12 @@ fun UserListScreen(
     onDetailsClick: (String) -> Unit,
 ) {
     val viewModel: UserListViewModel = hiltViewModel()
-    val items = viewModel.users.collectAsLazyPagingItems()
+    val state = viewModel.users.collectAsState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     ScreenContent(
         modifier = modifier,
         scrollBehavior = scrollBehavior,
-        items = items,
+        state = state,
         onDetailsClick = onDetailsClick,
         onUserSearch = viewModel::searchUsers
     )
@@ -43,7 +48,7 @@ fun UserListScreen(
 private fun ScreenContent(
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior,
-    items: LazyPagingItems<UserBriefModel>,
+    state: State<UserListScreenState>,
     onDetailsClick: (String) -> Unit,
     onUserSearch: (String) -> Unit,
 ) {
@@ -59,14 +64,32 @@ private fun ScreenContent(
                     .fillMaxSize()
                     .padding(start = 16.dp, end = 16.dp)
             ) {
-                UserList(
-                    userBriefs = items,
-                    scrollBehavior = scrollBehavior,
-                    onUserDetailsClick = onDetailsClick
-                )
+                when (val stateValue = state.value) {
+                    UserListScreenState.Empty -> {
+                        TryToSearchSomethingPlaceholder(
+                            modifier = Modifier.align(
+                                Alignment.Center
+                            )
+                        )
+                    }
+
+                    is UserListScreenState.Searching -> {
+                        UserList(
+                            searchingState = stateValue,
+                            scrollBehavior = scrollBehavior,
+                            onUserDetailsClick = onDetailsClick
+                        )
+                    }
+                }
             }
         }
     }
+}
+
+@Composable
+private fun TryToSearchSomethingPlaceholder(modifier: Modifier = Modifier) {
+    val text = stringResource(id = R.string.try_to_search_something)
+    Text(modifier = modifier, text = text, style = MaterialTheme.typography.titleSmall)
 }
 
 @ThemePreviews

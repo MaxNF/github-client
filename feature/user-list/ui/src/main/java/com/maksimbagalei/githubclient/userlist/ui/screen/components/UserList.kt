@@ -34,35 +34,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import com.maksimbagalei.githubclient.R
 import com.maksimbagalei.githubclient.designsystem.AppTheme
 import com.maksimbagalei.githubclient.designsystem.ThemePreviews
 import com.maksimbagalei.githubclient.userlist.ui.model.UserBriefModel
+import com.maksimbagalei.githubclient.userlist.ui.screen.state.UserListScreenState
 import com.valentinilk.shimmer.shimmer
 
 @Composable
 internal fun BoxScope.UserList(
-    userBriefs: LazyPagingItems<UserBriefModel>,
+    searchingState: UserListScreenState.Searching,
     scrollBehavior: TopAppBarScrollBehavior,
     onUserDetailsClick: (String) -> Unit
 ) {
-    when (userBriefs.loadState.source.refresh) {
-        is LoadState.Loading -> {
-            InitialLoadShimmer()
-        }
+    val pagingItems = searchingState.pagingFlow.collectAsLazyPagingItems()
 
-        is LoadState.Error -> {
-            TryAgainPlaceholder { userBriefs.refresh() }
-        }
+    when (pagingItems.loadState.source.refresh) {
+        is LoadState.Loading -> InitialLoadShimmer()
+
+        is LoadState.Error -> TryAgainPlaceholder { pagingItems.refresh() }
 
         is LoadState.NotLoading -> {
-            if (userBriefs.itemCount == 0) {
-                EmptyListPlaceholder(modifier = Modifier.align(Alignment.Center))
+            if (pagingItems.itemCount == 0) {
+                NoUserFoundPlaceholder(modifier = Modifier.align(Alignment.Center))
             } else {
                 LoadedList(
                     scrollBehavior = scrollBehavior,
-                    userBriefs = userBriefs,
+                    userBriefs = pagingItems,
                     onUserDetailsClick = onUserDetailsClick
                 )
             }
@@ -166,8 +166,8 @@ private fun InitialLoadShimmer() {
 }
 
 @Composable
-private fun EmptyListPlaceholder(modifier: Modifier = Modifier) {
-    val text = stringResource(id = R.string.empty_list_placeholder)
+private fun NoUserFoundPlaceholder(modifier: Modifier = Modifier) {
+    val text = stringResource(id = R.string.no_user_found_placeholder)
     Text(modifier = modifier, text = text, style = MaterialTheme.typography.titleSmall)
 }
 
