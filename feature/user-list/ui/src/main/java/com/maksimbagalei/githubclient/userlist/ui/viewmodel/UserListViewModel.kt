@@ -13,9 +13,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,9 +36,9 @@ internal class UserListViewModel @Inject constructor(
             searchUsersUseCase.invoke(searchString)
                 .map { pagingData ->
                     pagingData.map(userBriefModelMapper::map)
-                }
+                }.cachedIn(viewModelScope)
         } else flowOf(createNotLoadingPagingData())
-    }.cachedIn(viewModelScope)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), createNotLoadingPagingData())
 
     fun searchUsers(name: String) {
         viewModelScope.launch {
