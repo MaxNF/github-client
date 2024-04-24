@@ -3,8 +3,7 @@ package com.maksimbagalei.githubclient.data.network
 import okhttp3.Interceptor
 import okhttp3.Response
 
-private const val API_KEY =
-    "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"
+private const val API_KEY = ""
 
 private const val AUTH_NAME = "Authorization"
 private const val AUTH_VALUE = "Bearer $API_KEY"
