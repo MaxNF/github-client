@@ -17,48 +17,56 @@ import com.maksimbagalei.githubclient.userdetails.ui.mapper.UserDetailsToUserDet
 import com.maksimbagalei.githubclient.userdetails.ui.screen.state.UserDetailsScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 
 private const val LOGIN_KEY = "login"
 
 @HiltViewModel
 internal class UserDetailsViewModel @Inject constructor(
     private val getUserDetailsUseCase: GetUserDetailsUseCase,
-    private val getNonForkedRepositoriesUseCase: GetNonForkedRepositoriesUseCase,
+    getNonForkedRepositoriesUseCase: GetNonForkedRepositoriesUseCase,
     private val userDetailsMapper: UserDetailsToUserDetailsModelMapper,
     private val repositoryMapper: RepositoryToRepositoryModelMapper,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _screenState =
-        MutableStateFlow<UserDetailsScreenState>(UserDetailsScreenState.Loading)
-    val screenState = _screenState.asStateFlow()
+    private val refreshCommandFlow = MutableStateFlow(Any())
+    private val repositoriesFlow =
+        getNonForkedRepositoriesUseCase.invoke(savedStateHandle.get<String>(LOGIN_KEY)!!)
+            .map { it.map(repositoryMapper::map) }.cachedIn(viewModelScope)
+            .stateIn(viewModelScope, SharingStarted.Eagerly, createNotLoadingPagingData())
 
-    val repositories = savedStateHandle.get<String>(LOGIN_KEY)?.let { login ->
-        getNonForkedRepositoriesUseCase.invoke(login).map { it.map(repositoryMapper::map) }
-    }?.cachedIn(viewModelScope) ?: flowOf(createNotLoadingPagingData())
 
-    init {
-        fetchDetails()
-    }
+    val screenState = refreshCommandFlow.flatMapLatest {
+        flow {
+            val login = savedStateHandle.get<String>(LOGIN_KEY)!!
+            emit(getUserDetailsUseCase.invoke(login))
+        }.combine(repositoriesFlow) { userDetails, pagingData ->
+            if (userDetails is CallResult.Success) {
+                val userDetailsModel = userDetailsMapper.map(userDetails.value)
+                val pagingDataFlow = flowOf(pagingData)
+                UserDetailsScreenState.Loaded(userDetailsModel, pagingDataFlow)
+            } else {
+                UserDetailsScreenState.Error
+            }
+        }
+    }.onStart {
+        UserDetailsScreenState.Loading
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UserDetailsScreenState.Loading)
 
-    fun fetchDetails() {
+    fun reload() {
         savedStateHandle.get<String>(LOGIN_KEY)?.let { login ->
-            _screenState.value = UserDetailsScreenState.Loading
             viewModelScope.launch {
-                when (val userDetails = getUserDetailsUseCase(login)) {
-                    is CallResult.Success -> {
-                        val model = userDetailsMapper.map(userDetails.value)
-                        _screenState.value = UserDetailsScreenState.Loaded(model)
-                    }
-
-                    else -> _screenState.value = UserDetailsScreenState.Error
-                }
+                refreshCommandFlow.value = Any()
             }
         }
     }

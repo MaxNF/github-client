@@ -20,8 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.maksimbagalei.githubclient.designsystem.AppTheme
 import com.maksimbagalei.githubclient.designsystem.LocalScaffoldPaddingValues
 import com.maksimbagalei.githubclient.userdetails.ui.model.RepositoryModel
@@ -36,16 +34,14 @@ import kotlinx.coroutines.flow.flowOf
 fun UserDetailsScreen(modifier: Modifier = Modifier, onBackClick: () -> Unit) {
     val viewModel: UserDetailsViewModel = hiltViewModel()
     val state = viewModel.screenState.collectAsState()
-    val pagingData = viewModel.repositories.collectAsLazyPagingItems()
     val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     ScreenContent(
         modifier = modifier,
         scrollBehavior = scrollBehavior,
         onBackClick = onBackClick,
-        onReloadClick = viewModel::fetchDetails,
+        onReloadClick = viewModel::reload,
         state = state,
-        pagingData = pagingData,
         onRepoClick = { viewModel.openRepo(context, it) }
     )
 }
@@ -57,7 +53,6 @@ private fun ScreenContent(
     onReloadClick: () -> Unit,
     onBackClick: () -> Unit,
     state: State<UserDetailsScreenState>,
-    pagingData: LazyPagingItems<RepositoryModel>,
     onRepoClick: (String) -> Unit
 ) {
     Scaffold(topBar = { UserDetailsTopBar(scrollBehavior, onBackClick) }) { paddingValues ->
@@ -66,7 +61,6 @@ private fun ScreenContent(
                 modifier,
                 scrollBehavior,
                 state,
-                pagingData,
                 onReloadClick,
                 onRepoClick
             )
@@ -76,7 +70,8 @@ private fun ScreenContent(
 
 @Preview(widthDp = 400, heightDp = 700, showBackground = true)
 @Composable
-private fun LoadedStatePreview() {
+private fun LoadedStateLoadedPreview() {
+    val repo = RepositoryModel(0, "name", "language", "5", "description", "")
     val state = UserDetailsScreenState.Loaded(
         UserDetailsModel(
             "login",
@@ -84,16 +79,50 @@ private fun LoadedStatePreview() {
             "name",
             "company",
             "blogUrl",
-        )
+        ),
+        flowOf(PagingData.from(listOf(repo)))
     )
 
-    val repo = RepositoryModel(0, "name", "language", "5", "description", "")
+
     AppTheme {
         Box(Modifier.padding(16.dp)) {
             UserDetails(
                 state = remember { mutableStateOf(state) },
                 scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
-                pagingData = flowOf(PagingData.from(listOf(repo))).collectAsLazyPagingItems(),
+                onDetailsReloadClick = {},
+                onRepoClick = {}
+            )
+        }
+    }
+}
+
+@Preview(widthDp = 400, heightDp = 700, showBackground = true)
+@Composable
+private fun LoadedStateErrorPreview() {
+    val state = UserDetailsScreenState.Error
+
+    AppTheme {
+        Box(Modifier.padding(16.dp)) {
+            UserDetails(
+                state = remember { mutableStateOf(state) },
+                scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
+                onDetailsReloadClick = {},
+                onRepoClick = {}
+            )
+        }
+    }
+}
+
+@Preview(widthDp = 400, heightDp = 700, showBackground = true)
+@Composable
+private fun LoadedStateLoadingPreview() {
+    val state = UserDetailsScreenState.Loading
+
+    AppTheme {
+        Box(Modifier.padding(16.dp)) {
+            UserDetails(
+                state = remember { mutableStateOf(state) },
+                scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
                 onDetailsReloadClick = {},
                 onRepoClick = {}
             )

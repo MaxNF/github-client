@@ -27,7 +27,7 @@ import com.maksimbagalei.githubclient.designsystem.AppTheme
 import com.maksimbagalei.githubclient.userdetails.ui.model.UserDetailsModel
 
 @Composable
-internal fun AvatarSection(model: UserDetailsModel) {
+internal fun UserDetailsSection(model: UserDetailsModel) {
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         AsyncImage(
             modifier = Modifier
@@ -82,7 +82,7 @@ internal fun AvatarSection(model: UserDetailsModel) {
 fun AvatarSectionPreview() {
     AppTheme {
         Box(modifier = Modifier.padding(16.dp)) {
-            AvatarSection(
+            UserDetailsSection(
                 model = UserDetailsModel(
                     "login",
                     "avatarUrl",

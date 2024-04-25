@@ -2,7 +2,6 @@ package com.maksimbagalei.githubclient.userdetails.ui.screen.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,16 +17,13 @@ import com.maksimbagalei.githubclient.R
 import com.maksimbagalei.githubclient.designsystem.AppTheme
 
 @Composable
-internal fun ColumnScope.TryAgain(onReloadClick: () -> Unit) {
+internal fun TryAgain(modifier: Modifier = Modifier, onReloadClick: () -> Unit) {
     val errorMsg = stringResource(id = R.string.user_brief_loading_error)
     val tryAgainMsg = stringResource(id = R.string.try_again_button_label)
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .align(Alignment.CenterHorizontally),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(32.dp))
         Text(text = errorMsg, style = MaterialTheme.typography.titleSmall)
         Spacer(modifier = Modifier.height(8.dp))
         Text(
@@ -45,8 +41,6 @@ internal fun ColumnScope.TryAgain(onReloadClick: () -> Unit) {
 @Composable
 private fun TryAgainPreview() {
     AppTheme {
-        Column {
-            TryAgain {}
-        }
+        TryAgain {}
     }
 }
