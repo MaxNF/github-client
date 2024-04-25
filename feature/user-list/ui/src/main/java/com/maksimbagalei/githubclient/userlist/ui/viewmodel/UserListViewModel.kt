@@ -39,7 +39,7 @@ internal class UserListViewModel @Inject constructor(
                 }.cachedIn(viewModelScope)
             )
         } else UserListScreenState.Empty
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UserListScreenState.Empty)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, UserListScreenState.Empty)
 
     fun searchUsers(name: String) {
         viewModelScope.launch {
