@@ -1,11 +1,14 @@
 package com.maksimbagalei.githubclient.designsystem
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
-
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.unit.dp
 
 private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -72,6 +75,14 @@ private val DarkColors = darkColorScheme(
     scrim = md_theme_dark_scrim,
 )
 
+val dimens = Dimens(
+    spacedByPadding = 8.dp,
+    sidePadding = 16.dp,
+    sectionPadding = 16.dp,
+    innerVerticalPadding = 8.dp,
+    innerHorizontalPadding = 16.dp
+)
+
 @Composable
 fun AppTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
@@ -83,9 +94,13 @@ fun AppTheme(
         DarkColors
     }
 
-    MaterialTheme(
-        colorScheme = colors,
-        typography = AppTypography,
-        content = content,
-    )
+    CompositionLocalProvider(LocalDimens provides dimens) {
+        MaterialTheme(
+            colorScheme = colors,
+            typography = AppTypography,
+            content = content,
+        )
+    }
 }
+
+val LocalScaffoldPaddingValues = compositionLocalOf { PaddingValues() }
