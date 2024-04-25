@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.maksimbagalei.githubclient.R
+import com.maksimbagalei.githubclient.common.util.calculateAppBarAlpha
 import com.maksimbagalei.githubclient.designsystem.AppTheme
 
 private const val MAX_SEARCH_LENGTH = 256
@@ -29,7 +30,7 @@ fun UserListTopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     onUserSearch: (String) -> Unit
 ) {
-    val alpha = (1.5f - scrollBehavior.state.collapsedFraction).coerceIn(0f, 1f)
+    val alpha = calculateAppBarAlpha(1f, 0.5f, scrollBehavior.state.collapsedFraction)
     val containerColor = TopAppBarDefaults.topAppBarColors().containerColor
 
     CenterAlignedTopAppBar(
