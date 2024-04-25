@@ -3,7 +3,10 @@
 package com.maksimbagalei.githubclient.userlist.ui.screen
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -16,6 +19,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.maksimbagalei.githubclient.R
@@ -58,7 +62,12 @@ private fun ScreenContent(
         )
     }) { paddingValues ->
         CompositionLocalProvider(LocalScaffoldPaddingValues provides paddingValues) {
-            Box(modifier = modifier.fillMaxSize()) {
+            val layoutDirection = LocalLayoutDirection.current
+            val startPadding = paddingValues.calculateStartPadding(layoutDirection)
+            val endPadding = paddingValues.calculateEndPadding(layoutDirection)
+            Box(modifier = modifier
+                .fillMaxSize()
+                .padding(start = startPadding, end = endPadding)) {
                 when (val stateValue = state.value) {
                     UserListScreenState.Empty -> {
                         TryToSearchSomethingPlaceholder(

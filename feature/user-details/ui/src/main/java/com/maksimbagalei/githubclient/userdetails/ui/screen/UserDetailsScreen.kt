@@ -3,6 +3,8 @@
 package com.maksimbagalei.githubclient.userdetails.ui.screen
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -16,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -57,8 +60,11 @@ private fun ScreenContent(
 ) {
     Scaffold(topBar = { UserDetailsTopBar(scrollBehavior, onBackClick) }) { paddingValues ->
         CompositionLocalProvider(LocalScaffoldPaddingValues provides paddingValues) {
+            val layoutDirection = LocalLayoutDirection.current
+            val startPadding = paddingValues.calculateStartPadding(layoutDirection)
+            val endPadding = paddingValues.calculateEndPadding(layoutDirection)
             UserDetails(
-                modifier,
+                modifier.padding(start = startPadding, end = endPadding),
                 scrollBehavior,
                 state,
                 onReloadClick,
