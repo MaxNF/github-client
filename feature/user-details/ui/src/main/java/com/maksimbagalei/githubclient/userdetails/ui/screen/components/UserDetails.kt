@@ -41,7 +41,7 @@ import com.maksimbagalei.githubclient.designsystem.LocalDimens
 import com.maksimbagalei.githubclient.designsystem.LocalScaffoldPaddingValues
 import com.maksimbagalei.githubclient.userdetails.ui.model.RepositoryModel
 import com.maksimbagalei.githubclient.userdetails.ui.model.UserDetailsModel
-import com.maksimbagalei.githubclient.userdetails.ui.screenstate.UserDetailsScreenState
+import com.maksimbagalei.githubclient.userdetails.ui.screen.state.UserDetailsScreenState
 import com.valentinilk.shimmer.shimmer
 
 @Composable

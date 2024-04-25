@@ -14,7 +14,7 @@ import com.maksimbagalei.githubclient.userdetails.domain.GetNonForkedRepositorie
 import com.maksimbagalei.githubclient.userdetails.domain.GetUserDetailsUseCase
 import com.maksimbagalei.githubclient.userdetails.ui.mapper.RepositoryToRepositoryModelMapper
 import com.maksimbagalei.githubclient.userdetails.ui.mapper.UserDetailsToUserDetailsModelMapper
-import com.maksimbagalei.githubclient.userdetails.ui.screenstate.UserDetailsScreenState
+import com.maksimbagalei.githubclient.userdetails.ui.screen.state.UserDetailsScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

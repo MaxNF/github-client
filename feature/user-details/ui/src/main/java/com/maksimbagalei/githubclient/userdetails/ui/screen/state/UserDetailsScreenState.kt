@@ -1,4 +1,4 @@
-package com.maksimbagalei.githubclient.userdetails.ui.screenstate
+package com.maksimbagalei.githubclient.userdetails.ui.screen.state
 
 import com.maksimbagalei.githubclient.userdetails.ui.model.UserDetailsModel
 
