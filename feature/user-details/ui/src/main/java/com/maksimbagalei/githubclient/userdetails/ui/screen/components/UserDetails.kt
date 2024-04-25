@@ -14,12 +14,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -31,7 +29,6 @@ import com.maksimbagalei.githubclient.userdetails.ui.screen.state.UserDetailsScr
 @Composable
 internal fun UserDetails(
     modifier: Modifier = Modifier,
-    scrollBehavior: TopAppBarScrollBehavior,
     state: State<UserDetailsScreenState>,
     onDetailsReloadClick: () -> Unit,
     onRepoClick: (String) -> Unit,
@@ -54,7 +51,6 @@ internal fun UserDetails(
             is UserDetailsScreenState.Loaded -> {
                 LoadedState(
                     loadedState = screenState,
-                    scrollBehavior = scrollBehavior,
                     onRepoClick = onRepoClick
                 )
             }
@@ -66,14 +62,13 @@ internal fun UserDetails(
 private fun LoadedState(
     modifier: Modifier = Modifier,
     loadedState: UserDetailsScreenState.Loaded,
-    scrollBehavior: TopAppBarScrollBehavior,
     onRepoClick: (String) -> Unit,
 ) {
     val topBarPadding = LocalScaffoldPaddingValues.current.calculateTopPadding()
     val bottomBarPadding = LocalScaffoldPaddingValues.current.calculateBottomPadding()
     val pagingData = loadedState.pagingData.collectAsLazyPagingItems()
     LazyColumn(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier,
         contentPadding = PaddingValues(
             top = topBarPadding + LocalDimens.current.spacedByPadding,
             bottom = bottomBarPadding + LocalDimens.current.spacedByPadding

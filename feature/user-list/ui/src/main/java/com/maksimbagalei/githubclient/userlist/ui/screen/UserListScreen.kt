@@ -19,6 +19,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -55,7 +56,9 @@ private fun ScreenContent(
     onDetailsClick: (String) -> Unit,
     onUserSearch: (String) -> Unit,
 ) {
-    Scaffold(topBar = {
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
         UserListTopBar(
             scrollBehavior = scrollBehavior,
             onUserSearch = onUserSearch
@@ -80,7 +83,6 @@ private fun ScreenContent(
                     is UserListScreenState.Searching -> {
                         UserList(
                             searchingState = stateValue,
-                            scrollBehavior = scrollBehavior,
                             onUserDetailsClick = onDetailsClick
                         )
                     }

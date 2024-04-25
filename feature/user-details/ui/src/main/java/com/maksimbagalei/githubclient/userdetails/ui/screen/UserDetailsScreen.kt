@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,14 +59,15 @@ private fun ScreenContent(
     state: State<UserDetailsScreenState>,
     onRepoClick: (String) -> Unit
 ) {
-    Scaffold(topBar = { UserDetailsTopBar(scrollBehavior, onBackClick) }) { paddingValues ->
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = { UserDetailsTopBar(scrollBehavior, onBackClick) }) { paddingValues ->
         CompositionLocalProvider(LocalScaffoldPaddingValues provides paddingValues) {
             val layoutDirection = LocalLayoutDirection.current
             val startPadding = paddingValues.calculateStartPadding(layoutDirection)
             val endPadding = paddingValues.calculateEndPadding(layoutDirection)
             UserDetails(
                 modifier.padding(start = startPadding, end = endPadding),
-                scrollBehavior,
                 state,
                 onReloadClick,
                 onRepoClick
@@ -94,7 +96,6 @@ private fun LoadedStateLoadedPreview() {
         Box(Modifier.padding(16.dp)) {
             UserDetails(
                 state = remember { mutableStateOf(state) },
-                scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
                 onDetailsReloadClick = {},
                 onRepoClick = {}
             )
@@ -111,7 +112,6 @@ private fun LoadedStateErrorPreview() {
         Box(Modifier.padding(16.dp)) {
             UserDetails(
                 state = remember { mutableStateOf(state) },
-                scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
                 onDetailsReloadClick = {},
                 onRepoClick = {}
             )
@@ -128,7 +128,6 @@ private fun LoadedStateLoadingPreview() {
         Box(Modifier.padding(16.dp)) {
             UserDetails(
                 state = remember { mutableStateOf(state) },
-                scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
                 onDetailsReloadClick = {},
                 onRepoClick = {}
             )

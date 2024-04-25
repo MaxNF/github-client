@@ -21,12 +21,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,7 +45,6 @@ import com.valentinilk.shimmer.shimmer
 @Composable
 internal fun BoxScope.UserList(
     searchingState: UserListScreenState.Searching,
-    scrollBehavior: TopAppBarScrollBehavior,
     onUserDetailsClick: (String) -> Unit
 ) {
     val pagingItems = searchingState.pagingFlow.collectAsLazyPagingItems()
@@ -62,7 +59,6 @@ internal fun BoxScope.UserList(
                 NoUserFoundPlaceholder(modifier = Modifier.align(Alignment.Center))
             } else {
                 LoadedList(
-                    scrollBehavior = scrollBehavior,
                     userBriefs = pagingItems,
                     onUserDetailsClick = onUserDetailsClick
                 )
@@ -73,14 +69,12 @@ internal fun BoxScope.UserList(
 
 @Composable
 private fun LoadedList(
-    scrollBehavior: TopAppBarScrollBehavior,
     userBriefs: LazyPagingItems<UserBriefModel>,
     onUserDetailsClick: (String) -> Unit
 ) {
     val topPadding = LocalScaffoldPaddingValues.current.calculateTopPadding()
     val bottomPadding = LocalScaffoldPaddingValues.current.calculateBottomPadding()
     LazyColumn(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         contentPadding = PaddingValues(
             top = topPadding + LocalDimens.current.spacedByPadding,
             bottom = bottomPadding + LocalDimens.current.spacedByPadding
