@@ -16,11 +16,11 @@ private const val ACCEPT_VALUE = "application/vnd.github+json"
 
 internal class HeaderInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val newRequest = chain.request().newBuilder()
-            .addHeader(AUTH_NAME, AUTH_VALUE)
-            .addHeader(API_VERSION_NAME, API_VERSION_VALUE)
-            .addHeader(ACCEPT_NAME, ACCEPT_VALUE)
-            .build()
-        return chain.proceed(newRequest)
+        val builder = chain.request().newBuilder()
+        if (API_KEY.isNotBlank()) builder.addHeader(AUTH_NAME, AUTH_VALUE)
+            builder.addHeader(API_VERSION_NAME, API_VERSION_VALUE)
+            builder.addHeader(ACCEPT_NAME, ACCEPT_VALUE)
+
+        return chain.proceed(builder.build())
     }
 }
