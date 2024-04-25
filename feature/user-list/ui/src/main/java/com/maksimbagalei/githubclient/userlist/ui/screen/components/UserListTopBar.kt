@@ -29,12 +29,19 @@ fun UserListTopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     onUserSearch: (String) -> Unit
 ) {
+    val alpha = (1.5f - scrollBehavior.state.collapsedFraction).coerceIn(0f, 1f)
+    val containerColor = TopAppBarDefaults.topAppBarColors().containerColor
+
     CenterAlignedTopAppBar(
         modifier = modifier,
         title = {
             TopBarTitle(onUserSearch)
         },
-        scrollBehavior = scrollBehavior
+        scrollBehavior = scrollBehavior,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = containerColor.copy(alpha),
+            scrolledContainerColor = containerColor.copy(alpha)
+        ),
     )
 }
 

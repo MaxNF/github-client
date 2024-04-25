@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,6 +37,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.maksimbagalei.githubclient.R
 import com.maksimbagalei.githubclient.designsystem.AppTheme
+import com.maksimbagalei.githubclient.designsystem.LocalDimens
+import com.maksimbagalei.githubclient.designsystem.LocalScaffoldPaddingValues
 import com.maksimbagalei.githubclient.userdetails.ui.model.RepositoryModel
 import com.maksimbagalei.githubclient.userdetails.ui.model.UserDetailsModel
 import com.maksimbagalei.githubclient.userdetails.ui.screenstate.UserDetailsScreenState
@@ -52,13 +53,16 @@ internal fun UserDetails(
     onDetailsReloadClick: () -> Unit,
     onRepoClick: (String) -> Unit,
 ) {
+    val topBarPadding = LocalScaffoldPaddingValues.current.calculateTopPadding()
+    val bottomBarPadding = LocalScaffoldPaddingValues.current.calculateBottomPadding()
+
     LazyColumn(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         contentPadding = PaddingValues(
-            top = 16.dp,
-            bottom = 32.dp
+            top = topBarPadding + LocalDimens.current.spacedByPadding,
+            bottom = bottomBarPadding + LocalDimens.current.spacedByPadding
         ),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(LocalDimens.current.spacedByPadding)
     ) {
         item {
             Column {
@@ -79,7 +83,6 @@ internal fun UserDetails(
                     text = stringResource(id = R.string.repos_label),
                     style = MaterialTheme.typography.titleSmall
                 )
-                Spacer(modifier = Modifier.height(8.dp))
             }
         }
 
@@ -125,6 +128,7 @@ private fun LazyListScope.showLoadedItems(
         }
     }
 }
+
 @Composable
 private fun TryAgainPlaceholder(
     onReloadClick: () -> Unit,
@@ -155,7 +159,7 @@ private fun TryAgainPlaceholder(
 @Composable
 private fun LoadingRepoItem() {
     Surface(
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.primary,
         modifier = Modifier
             .shimmer()
@@ -181,7 +185,7 @@ private fun LoadedState(model: UserDetailsModel) {
 @Composable
 private fun RepositoryItem(item: RepositoryModel, onClick: (String) -> Unit) {
     Surface(
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.medium,
         onClick = { onClick(item.url) },
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier
@@ -189,7 +193,10 @@ private fun RepositoryItem(item: RepositoryModel, onClick: (String) -> Unit) {
     ) {
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(
+                    horizontal = LocalDimens.current.innerHorizontalPadding,
+                    vertical = LocalDimens.current.innerVerticalPadding
+                )
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -254,7 +261,7 @@ private fun LazyListScope.handleAppendLoadingState(pagingData: LazyPagingItems<R
 private fun LazyListScope.singleItemLoadingError(onAppendReloadClick: () -> Unit) {
     item {
         Surface(
-            shape = RoundedCornerShape(16.dp),
+            shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.tertiary,
             modifier = Modifier
                 .fillMaxWidth()

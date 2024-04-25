@@ -19,10 +19,17 @@ import com.maksimbagalei.githubclient.designsystem.AppTheme
 
 @Composable
 internal fun UserDetailsTopBar(scrollBehavior: TopAppBarScrollBehavior, onBackClick: () -> Unit) {
+    val alpha = (1.5f - scrollBehavior.state.collapsedFraction).coerceIn(0f, 1f)
+    val containerColor = TopAppBarDefaults.topAppBarColors().containerColor
+
     TopAppBar(
         scrollBehavior = scrollBehavior,
         navigationIcon = { NavigationIcon(onBackClick) },
-        title = { TopBarTitle() }
+        title = { TopBarTitle() },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = containerColor.copy(alpha),
+            scrolledContainerColor = containerColor.copy(alpha)
+        )
     )
 }
 

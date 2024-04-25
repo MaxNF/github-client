@@ -9,6 +9,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +23,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.maksimbagalei.githubclient.designsystem.AppTheme
+import com.maksimbagalei.githubclient.designsystem.LocalScaffoldPaddingValues
 import com.maksimbagalei.githubclient.userdetails.ui.model.RepositoryModel
 import com.maksimbagalei.githubclient.userdetails.ui.model.UserDetailsModel
 import com.maksimbagalei.githubclient.userdetails.ui.screen.components.UserDetails
@@ -38,7 +40,7 @@ fun UserDetailsScreen(modifier: Modifier = Modifier, onBackClick: () -> Unit) {
     val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     ScreenContent(
-        modifier = modifier.padding(horizontal = 16.dp),
+        modifier = modifier,
         scrollBehavior = scrollBehavior,
         onBackClick = onBackClick,
         onReloadClick = viewModel::fetchDetails,
@@ -58,15 +60,17 @@ private fun ScreenContent(
     pagingData: LazyPagingItems<RepositoryModel>,
     onRepoClick: (String) -> Unit
 ) {
-    Scaffold(topBar = { UserDetailsTopBar(scrollBehavior, onBackClick) }) {
-        UserDetails(
-            modifier.padding(it),
-            scrollBehavior,
-            state,
-            pagingData,
-            onReloadClick,
-            onRepoClick
-        )
+    Scaffold(topBar = { UserDetailsTopBar(scrollBehavior, onBackClick) }) { paddingValues ->
+        CompositionLocalProvider(LocalScaffoldPaddingValues provides paddingValues) {
+            UserDetails(
+                modifier,
+                scrollBehavior,
+                state,
+                pagingData,
+                onReloadClick,
+                onRepoClick
+            )
+        }
     }
 }
 

@@ -76,6 +76,7 @@ private val DarkColors = darkColorScheme(
 )
 
 val dimens = Dimens(
+    globalHorizontalPadding = 16.dp,
     spacedByPadding = 8.dp,
     sidePadding = 16.dp,
     sectionPadding = 16.dp,

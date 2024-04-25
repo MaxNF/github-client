@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -38,6 +37,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import com.maksimbagalei.githubclient.R
 import com.maksimbagalei.githubclient.designsystem.AppTheme
+import com.maksimbagalei.githubclient.designsystem.LocalDimens
+import com.maksimbagalei.githubclient.designsystem.LocalScaffoldPaddingValues
 import com.maksimbagalei.githubclient.designsystem.ThemePreviews
 import com.maksimbagalei.githubclient.userlist.ui.model.UserBriefModel
 import com.maksimbagalei.githubclient.userlist.ui.screen.state.UserListScreenState
@@ -76,13 +77,15 @@ private fun LoadedList(
     userBriefs: LazyPagingItems<UserBriefModel>,
     onUserDetailsClick: (String) -> Unit
 ) {
+    val topPadding = LocalScaffoldPaddingValues.current.calculateTopPadding()
+    val bottomPadding = LocalScaffoldPaddingValues.current.calculateBottomPadding()
     LazyColumn(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         contentPadding = PaddingValues(
-            top = 16.dp,
-            bottom = 32.dp
+            top = topPadding + LocalDimens.current.spacedByPadding,
+            bottom = bottomPadding + LocalDimens.current.spacedByPadding
         ),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(LocalDimens.current.spacedByPadding)
     ) {
         showLoadedItems(
             userBriefs = userBriefs,
@@ -123,7 +126,7 @@ private fun LazyListScope.handleAppendLoadingState(userBriefs: LazyPagingItems<U
 private fun LazyListScope.singleItemLoadingError(onAppendReloadClick: () -> Unit) {
     item {
         Surface(
-            shape = RoundedCornerShape(16.dp),
+            shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.tertiary,
             modifier = Modifier
                 .fillMaxWidth()
@@ -140,7 +143,7 @@ private fun LazyListScope.singleItemLoadingError(onAppendReloadClick: () -> Unit
                     text = errorMsg,
                     style = MaterialTheme.typography.titleMedium
                 )
-                Spacer(modifier = Modifier.size(8.dp))
+                Spacer(modifier = Modifier.size(LocalDimens.current.spacedByPadding))
                 Text(
                     modifier = Modifier.clickable {
                         onAppendReloadClick()
@@ -155,9 +158,14 @@ private fun LazyListScope.singleItemLoadingError(onAppendReloadClick: () -> Unit
 
 @Composable
 private fun InitialLoadShimmer() {
+    val topBarPadding = LocalScaffoldPaddingValues.current.calculateTopPadding()
+    val bottomBarPadding = LocalScaffoldPaddingValues.current.calculateBottomPadding()
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.padding(top = 16.dp)
+        modifier = Modifier.padding(
+            top = topBarPadding + LocalDimens.current.spacedByPadding,
+            bottom = bottomBarPadding + LocalDimens.current.spacedByPadding
+        )
     ) {
         repeat(3) {
             LoadingUserListItem()
@@ -184,7 +192,7 @@ private fun BoxScope.TryAgainPlaceholder(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = errorMsg, style = MaterialTheme.typography.titleSmall)
-        Spacer(modifier = Modifier.size(8.dp))
+        Spacer(modifier = Modifier.size(LocalDimens.current.spacedByPadding))
         Text(
             modifier = Modifier.clickable {
                 onReloadClick()
@@ -199,7 +207,7 @@ private fun BoxScope.TryAgainPlaceholder(
 @Composable
 private fun LoadingUserListItem() {
     Surface(
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.primary,
         modifier = Modifier
             .shimmer()
@@ -211,21 +219,21 @@ private fun LoadingUserListItem() {
 @Composable
 private fun UserListItem(item: UserBriefModel, onClick: (String) -> Unit) {
     Surface(
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.medium,
         onClick = { onClick(item.login) },
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier
             .fillMaxWidth()
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = LocalDimens.current.innerHorizontalPadding),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
                 model = item.avatarUrl,
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(vertical = 8.dp)
+                    .padding(vertical = LocalDimens.current.spacedByPadding)
                     .size(80.dp)
                     .clip(shape = CircleShape)
             )
@@ -235,7 +243,7 @@ private fun UserListItem(item: UserBriefModel, onClick: (String) -> Unit) {
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = LocalDimens.current.innerHorizontalPadding)
             )
         }
     }
